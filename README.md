@@ -5,19 +5,6 @@
 git checkout -b <ブランチ名>
 ```
 
-### ローカルブランチをリモートに登録
-
-```
-git push -u origin <ブランチ名>
-```
-
-### ローカルブランチをリモートと紐づけ
-- 該当ブランチにcheckout
-
-```
-git branch -u origin/master
-```
-
 ### ローカルブランチのマージ
 - 更新したいブランチにcheckout
 
