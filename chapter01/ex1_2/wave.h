@@ -52,7 +52,8 @@ void mono_wave_read(MONO_PCM *pcm, char *file_name)
 
   pcm->fs = fmt_samples_per_sec;                /* 標本化周波数 */
   pcm->bits = fmt_bits_per_sample;              /* 量子化精度 */
-  pcm->length = data_chunk_size / 2;            /* 音データの長さ */
+  pcm->length = data_chunk_size / 2;            /* 音データの長さ（サンプル数), 2で割るというよりは、fmt_block_sizeで割るという方が正確(p10 図1.8参照) */
+                                                /* 量子化精度16bitのため、全体のデータサイズを2で割る(8bitに揃える)ことで、データの長さを取得している */
   pcm->s = calloc(pcm->length, sizeof(double)); /* メモリの確保 */
 
   for (n = 0; n < pcm->length; n++)
@@ -130,7 +131,7 @@ void mono_wave_write(MONO_PCM *pcm, char *file_name)
 
   for (n = 0; n < pcm->length; n++)
   {
-    s = (pcm->s[n] + 1.0) / 2.0 * 65536.0;
+    s = (pcm->s[n] + 1.0) / 2.0 * 65536.0;  /* 左辺のsはmono_wave_write関数内で定義したdouble型の変数, 右辺のsはMONO_PCM構造体で定義した, サンプルごとの音データの配列(double*型) */
 
     if (s > 65535.0)
     {
