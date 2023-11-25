@@ -35,3 +35,7 @@ git branch --contains
 
 ### 11/23(Thu)
 - C言語の練習。
+
+
+### 11/25(Sat)
+- chapter01のおさらい。
