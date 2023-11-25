@@ -52,3 +52,4 @@ git branch --contains
 
 ### 11/25(Sat)
 - chapter01のおさらい。
+- アルゴリズムの勉強。
