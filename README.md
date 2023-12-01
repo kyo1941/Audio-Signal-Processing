@@ -14,7 +14,7 @@
 ## 日記
 ### 11/22(Wed)
 - リポジトリを作成。
-- Linuxの設定。また、VScodeとGitの連携。
+- Linuxの設定。VScodeとGitの連携。
 
 ### 11/23(Thu)
 - C言語の練習。
