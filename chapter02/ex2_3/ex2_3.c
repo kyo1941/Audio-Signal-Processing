@@ -8,30 +8,30 @@ int main(void)
   MONO_PCM pcm1;
   int n, i;
   double A, f0;
-  
-  pcm1.fs = 8000; /* �W�{�����g�� */
-  pcm1.bits = 16; /* �ʎq�����x */
-  pcm1.length = 8000; /* ���f�[�^�̒��� */
-  pcm1.s = calloc(pcm1.length, sizeof(double)); /* �������̊m�� */
-  
-  A = 0.25; /* �U�� */
-  f0 = 250.0; /* ��{���g�� */
-  
-  /* ��`�g */
+
+  pcm1.fs = 8000;                               /* 標本化周波数 */
+  pcm1.bits = 16;                               /* 量子化精度 */
+  pcm1.length = 8000;                           /* 音データの長さ */
+  pcm1.s = calloc(pcm1.length, sizeof(double)); /* メモリの確保 */
+
+  A = 0.25;   /* 振幅 */
+  f0 = 250.0; /* メモリの確保 */
+
+  /* ノコギリ波 */
   for (n = 0; n < pcm1.length; n++)
   {
-    for (i = 1; i <= 15; i++) /* 15�{���܂ł̏d�ˍ��킹 */
+    for (i = 1; i <= 15; i++) /* 15倍音までの重ね合わせ */
     {
-      if (i % 2 == 1) /* ����̔{���̂ݏd�ˍ��킹�� */
+      if (i % 2 == 1) /* 偶数次の倍音の排除 */
       {
         pcm1.s[n] += A / i * sin(2.0 * M_PI * f0 * i * n / pcm1.fs);
       }
     }
   }
-  
-  mono_wave_write(&pcm1, "ex2_3.wav"); /* WAVE�t�@�C���Ƀ��m�����̉��f�[�^���o�͂��� */
-  
-  free(pcm1.s); /* �������̉�� */
-  
+
+  mono_wave_write(&pcm1, "ex2_3.wav"); /* WAVEファイルにモノラルの音データを出力する */
+
+  free(pcm1.s); /* メモリの解放 */
+
   return 0;
 }
