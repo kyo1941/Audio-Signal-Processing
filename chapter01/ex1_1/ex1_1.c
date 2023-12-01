@@ -11,7 +11,7 @@ int main(void)
 
   pcm1.fs = pcm0.fs;                            /* 標本化周波数 */
   pcm1.bits = pcm0.bits;                        /* 量子化精度 */
-  pcm1.length = pcm0.length;                    /* 音データの長さ */  /* bytePerSec × 秒数 ( = blockSize × samplePerSec × 秒数) */
+  pcm1.length = pcm0.length;                    /* 音データの長さ */  /* bytePerSec × 秒数 ( = (blockSize × samplePerSec) × 秒数) */
   pcm1.s = calloc(pcm1.length, sizeof(double)); /* メモリの確保 */
 
 /*
