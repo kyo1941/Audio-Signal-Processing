@@ -14,7 +14,7 @@ int main(void)
         input[i] = rand() % 10 + 1;
         printf("%d ", input[i]);
         if (i == array - 1)
-            printf("]\n");
+           printf("]\n");
     }
 
     int time = simpleSort(input, array);

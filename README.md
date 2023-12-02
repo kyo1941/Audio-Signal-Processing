@@ -1,35 +1,5 @@
-## コマンド
-### ローカルブランチの作成
-
-```
-git checkout -b <ブランチ名>
-```
-
-### ローカルブランチをリモートに登録
-
-```
-git push -u origin <ブランチ名>
-```
-
-### ローカルブランチをリモートと紐づけ
-- 該当ブランチにcheckout
-
-```
-git branch -u origin/master
-```
-
-### ローカルブランチのマージ
-- 更新したいブランチにcheckout
-
-```
-git marge <更新元のブランチ名>
-```
-
-### 現在のブランチを確認
-
-```
-git branch --contains
-```
+## gnuplot
+- 必要に応じて記載予定...
 
 ## 青木氏ホームページ
 - <http://floor13.sakura.ne.jp/>  
@@ -44,7 +14,7 @@ git branch --contains
 ## 日記
 ### 11/22(Wed)
 - リポジトリを作成。
-- Linuxの設定。また、VScodeとGitの連携。
+- Linuxの設定。VScodeとGitの連携。
 
 ### 11/23(Thu)
 - C言語の練習。
@@ -56,6 +26,7 @@ git branch --contains
 
 ### 12/1(Fri)
 - Chapter02, ex2_3まで。
+- Mac環境の整備。
 
 ### 12/2(Sat)
 - gnuplot周り整備。
