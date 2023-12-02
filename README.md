@@ -55,4 +55,7 @@ git branch --contains
 - アルゴリズムの勉強。
 
 ### 12/1(Fri)
-- Chapter02, ex2_3まで
+- Chapter02, ex2_3まで。
+
+### 12/2(Sat)
+- gnuplot周り整備。
