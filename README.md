@@ -1,6 +1,13 @@
 ## gnuplot
-- 必要に応じて記載予定...
-
+```
+set xlabel ""
+```
+```
+set xrange[x1:x2]
+```
+```
+plot "data.txt" w l
+```
 ## 青木氏ホームページ
 - <http://floor13.sakura.ne.jp/>  
 ※ 自動でhttpsに補完されてアクセスできない可能性あり。
