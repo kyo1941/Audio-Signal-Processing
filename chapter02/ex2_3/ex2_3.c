@@ -9,6 +9,10 @@ int main(void)
   int n, i;
   double A, f0;
 
+  FILE *fp;
+
+  fp = fopen("data1.txt", "w");
+
   pcm1.fs = 8000;                               /* 標本化周波数 */
   pcm1.bits = 16;                               /* 量子化精度 */
   pcm1.length = 8000;                           /* 音データの長さ */
@@ -27,9 +31,12 @@ int main(void)
         pcm1.s[n] += A / i * sin(2.0 * M_PI * f0 * i * n / pcm1.fs);
       }
     }
+    fprintf(fp, "%d %f\n", n, pcm1.s[n]);
   }
 
   mono_wave_write(&pcm1, "ex2_3.wav"); /* WAVEファイルにモノラルの音データを出力する */
+
+  fclose(fp);
 
   free(pcm1.s); /* メモリの解放 */
 
