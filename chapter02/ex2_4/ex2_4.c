@@ -10,6 +10,11 @@ int main(void)
   double *x_real, *x_imag, *X_real, *X_imag;
   double W_real, W_imag;
 
+  FILE *fp1, *fp2;
+
+  fp1 = fopen("data1.txt", "w");
+  fp2 = fopen("data2.txt", "w");
+
   mono_wave_read(&pcm0, "ex2_1.wav"); /* WAVEファイルからモノラルの音データを入力する */
 
   N = 64;                             /* DFTのサイズ */
@@ -34,6 +39,8 @@ int main(void)
       X_real[k] += W_real * x_real[n] - W_imag * x_imag[n]; /* X(k)の実数部 */
       X_imag[k] += W_real * x_imag[n] + W_imag * x_real[n]; /* X(k)の虚数部 */
     }
+    fprintf(fp1, "%d %f\n", k, sqrt(pow(X_real[k], 2) + pow(X_imag[k], 2))); /* 振幅スペクトル */
+    fprintf(fp2, "%d %f\n", k, asin(X_imag[k]));                             /* 位相スペクトル（ 誤差の影響で、k=2,62の時の値がnanになる。正しくはそれぞれ-π/2, π/2 ） */
   }
 
   /* 周波数特性 */
@@ -47,6 +54,9 @@ int main(void)
   free(x_imag); /* メモリの解放 */
   free(X_real); /* メモリの解放 */
   free(X_imag); /* メモリの解放 */
+
+  fclose(fp1);
+  fclose(fp2);
 
   return 0;
 }
