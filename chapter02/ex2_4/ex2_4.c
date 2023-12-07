@@ -15,9 +15,9 @@ int main(void)
   fp1 = fopen("data1.txt", "w");
   fp2 = fopen("data2.txt", "w");
 
-  mono_wave_read(&pcm0, "ex2_1.wav"); /* WAVEファイルからモノラルの音データを入力する */
+  mono_wave_read(&pcm0, "guitar_A4.wav"); /* WAVEファイルからモノラルの音データを入力する */
 
-  N = 64;                             /* DFTのサイズ */
+  N = 2500;                           /* DFTのサイズ */
   x_real = calloc(N, sizeof(double)); /* メモリの確保 */
   x_imag = calloc(N, sizeof(double)); /* メモリの確保 */
   X_real = calloc(N, sizeof(double)); /* メモリの確保 */
@@ -39,15 +39,15 @@ int main(void)
       X_real[k] += W_real * x_real[n] - W_imag * x_imag[n]; /* X(k)の実数部 */
       X_imag[k] += W_real * x_imag[n] + W_imag * x_real[n]; /* X(k)の虚数部 */
     }
-    fprintf(fp1, "%d %f\n", k, sqrt(pow(X_real[k], 2) + pow(X_imag[k], 2))); /* 振幅スペクトル */
-    fprintf(fp2, "%d %f\n", k, asin(X_imag[k]));                             /* 位相スペクトル（ 誤差の影響で、k=2,62の時の値がnanになる。正しくはそれぞれ-π/2, π/2 ） */
+    fprintf(fp1, "%d %f\n", k * pcm0.fs/N, sqrt(pow(X_real[k], 2) + pow(X_imag[k], 2))); /* 振幅スペクトル */
+    fprintf(fp2, "%d %f\n", k * pcm0.fs/N, atan2((int)X_imag[k], (int)X_real[k]));       /* 位相スペクトル */
   }
 
   /* 周波数特性 */
-  for (k = 0; k < N; k++)
+  /* for (k = 0; k < N; k++)
   {
     printf("%d %f+j%f\n", k, X_real[k], X_imag[k]);
-  }
+  } */
 
   free(pcm0.s); /* メモリの解放 */
   free(x_real); /* メモリの解放 */
