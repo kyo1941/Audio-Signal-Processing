@@ -8,27 +8,34 @@ int main(void)
   MONO_PCM pcm1;
   int n, i;
   double A, f0;
+
+  FILE *fp;
+
+  fp = fopen("data1.txt", "w");
+
+  pcm1.fs = 8000; /* æ¨™æœ¬åŒ–å‘¨æ³¢æ•° */
+  pcm1.bits = 16; /* é‡å­åŒ–ç²¾åº¦ */
+  pcm1.length = 8000; /* éŸ³ãƒ‡ãƒ¼ã‚¿ã®é•·ã• */
+  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
-  pcm1.fs = 8000; /* •W–{‰»ü”g” */
-  pcm1.bits = 16; /* —Êq‰»¸“x */
-  pcm1.length = 8000; /* ‰¹ƒf[ƒ^‚Ì’·‚³ */
-  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  A = 0.25; /* æŒ¯å¹… */
+  f0 = 250.0; /* åŸºæœ¬å‘¨æ³¢æ•° */
   
-  A = 0.25; /* U• */
-  f0 = 250.0; /* Šî–{ü”g” */
-  
-  /* ƒRƒTƒCƒ“”g‚ÌƒmƒRƒMƒŠ”g */
+  /* ãƒã‚³ã‚®ãƒªæ³¢ */
   for (n = 0; n < pcm1.length; n++)
   {
-    for (i = 1; i <= 15; i++) /* 15”{‰¹‚Ü‚Å‚Ìd‚Ë‡‚í‚¹ */
+    for (i = 1; i <= 15; i++) /* 15å€éŸ³ã¾ã§ã®é‡ã­åˆã‚ã› */
     {
       pcm1.s[n] += A / i * cos(2.0 * M_PI * f0 * i * n / pcm1.fs);
     }
+    fprintf(fp, "%d %f\n", n, pcm1.s[n]); /* ã‚µãƒ³ãƒ—ãƒ«-æŒ¯å¹… ãƒ—ãƒ­ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿ */
   }
   
-  mono_wave_write(&pcm1, "ex2_5.wav"); /* WAVEƒtƒ@ƒCƒ‹‚Éƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğo—Í‚·‚é */
+  mono_wave_write(&pcm1, "ex2_5.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãå‡ºã™ */
   
-  free(pcm1.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
+  free(pcm1.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+
+  fclose(fp);
   
   return 0;
 }

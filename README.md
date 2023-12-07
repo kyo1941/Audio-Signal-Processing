@@ -37,3 +37,9 @@ plot "data.txt" w l
 
 ### 12/2(Sat)
 - gnuplot周り整備。
+
+### 12/6(Wed)
+- DFTの勉強。gnuplot用のファイル作成。
+
+### 12/7(Thu)
+- DFTの勉強。DFT用の音声データ追加。
