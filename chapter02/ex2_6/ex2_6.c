@@ -10,24 +10,24 @@ int main(void)
   int n, k, N;
   double *x_real, *x_imag, *X_real, *X_imag, *w;
   double W_real, W_imag;
-  
-  mono_wave_read(&pcm0, "ex2_1.wav"); /* WAVEƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğ“ü—Í‚·‚é */
-  
-  N = 64; /* DFT‚ÌƒTƒCƒY */
-  x_real = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  x_imag = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  X_real = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  X_imag = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  w = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  
-  Hanning_window(w, N); /* ƒnƒjƒ“ƒO‘‹ */
-  
+
+  mono_wave_read(&pcm0, "ex2_1.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã™ã‚‹ */
+
+  N = 64;                             /* DFTã®ã‚µã‚¤ã‚º */
+  x_real = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  x_imag = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  X_real = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  X_imag = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  w = calloc(N, sizeof(double));      /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+
+  Hanning_window(w, N); /* ãƒãƒŸãƒ³ã‚°ã®çª“ */
+
   for (n = 0; n < N; n++)
   {
-    x_real[n] = pcm0.s[n] * w[n]; /* x(n)‚ÌÀ”•” */
-    x_imag[n] = 0.0; /* x(n)‚Ì‹•”•” */
+    x_real[n] = pcm0.s[n] * w[n]; /* x(n)ã®å®Ÿæ•°éƒ¨ */
+    x_imag[n] = 0.0;              /* x(n)ã®è™šæ•°éƒ¨ */
   }
-  
+
   /* DFT */
   for (k = 0; k < N; k++)
   {
@@ -35,23 +35,23 @@ int main(void)
     {
       W_real = cos(2.0 * M_PI * k * n / N);
       W_imag = -sin(2.0 * M_PI * k * n / N);
-      X_real[k] += W_real * x_real[n] - W_imag * x_imag[n]; /* X(k)‚ÌÀ”•” */
-      X_imag[k] += W_real * x_imag[n] + W_imag * x_real[n]; /* X(k)‚Ì‹•”•” */
+      X_real[k] += W_real * x_real[n] - W_imag * x_imag[n]; /* X(k)ã®å®Ÿæ•°éƒ¨ */
+      X_imag[k] += W_real * x_imag[n] + W_imag * x_real[n]; /* X(k)ã®è™šæ•°éƒ¨ */
     }
   }
-  
-  /* ü”g”“Á« */
+
+  /* å‘¨æ³¢æ•°ç‰¹æ€§ */
   for (k = 0; k < N; k++)
   {
     printf("%d %f+j%f\n", k, X_real[k], X_imag[k]);
   }
-  
-  free(pcm0.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(x_real); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(x_imag); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(X_real); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(X_imag); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(w); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  
+
+  free(pcm0.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(x_real); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(x_imag); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(X_real); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(X_imag); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(w);      /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+
   return 0;
 }
