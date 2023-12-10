@@ -9,30 +9,30 @@ int main(void)
   MONO_PCM pcm0;
   int n, k, N;
   double *x_real, *x_imag;
-  
-  mono_wave_read(&pcm0, "ex2_1.wav"); /* WAVEƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğ“ü—Í‚·‚é */
-  
+
+  mono_wave_read(&pcm0, "ex2_1.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã™ã‚‹ */
+
   N = 64;
-  x_real = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  x_imag = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  
+  x_real = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  x_imag = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+
   for (n = 0; n < N; n++)
   {
-    x_real[n] = pcm0.s[n]; /* x(n)‚ÌÀ”•” */
-    x_imag[n] = 0.0; /* x(n)‚Ì‹•”•” */
+    x_real[n] = pcm0.s[n]; /* x(n)ã®å®Ÿæ•°éƒ¨ */
+    x_imag[n] = 0.0;       /* x(n)ã®è™šæ•°éƒ¨ */
   }
-  
-  FFT(x_real, x_imag, N); /* FFT‚ÌŒvZŒ‹‰Ê‚Íx_real‚Æx_imag‚Éã‘‚«‚³‚ê‚é */
-  
-  /* ü”g”“Á« */
+
+  FFT(x_real, x_imag, N); /* FFTã®è¨ˆç®—çµæœã¯x_realã¨x_imagã«ä¸Šæ›¸ãã•ã‚Œã‚‹ */
+
+  /* å‘¨æ³¢æ•°ç‰¹æ€§ */
   for (k = 0; k < N; k++)
   {
     printf("%d %f+j%f\n", k, x_real[k], x_imag[k]);
   }
-  
-  free(pcm0.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(x_real); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(x_imag); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  
+
+  free(pcm0.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(x_real); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(x_imag); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+
   return 0;
 }
