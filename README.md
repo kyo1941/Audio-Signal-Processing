@@ -43,3 +43,6 @@ plot "data.txt" w l
 
 ### 12/7(Thu)
 - DFTの勉強。DFT用の音声データ追加。
+
+### 12/10(Sun)
+- FFTの勉強。
