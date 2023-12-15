@@ -48,4 +48,4 @@ plot "data.txt" w l
 - FFTの勉強。
 
 ### 12/15(Fri)
-- FFTの勉強。
+- FFTの勉強。ブランチの整理。
