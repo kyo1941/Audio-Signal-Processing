@@ -2,6 +2,9 @@
 ```
 plot "data.txt" w l
 ```
+```
+plot "data.txt" w p pt 7
+```
 ## 青木氏ホームページ
 - <http://floor13.sakura.ne.jp/>  
 ※ 自動でhttpsに補完されてアクセスできない可能性あり。
