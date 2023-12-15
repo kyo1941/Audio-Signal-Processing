@@ -1,11 +1,5 @@
 ## gnuplot
 ```
-set xlabel ""
-```
-```
-set xrange[x1:x2]
-```
-```
 plot "data.txt" w l
 ```
 ## 青木氏ホームページ
