@@ -46,3 +46,6 @@ plot "data.txt" w l
 
 ### 12/10(Sun)
 - FFTの勉強。
+
+### 12/15(Fri)
+- FFTの勉強。
