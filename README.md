@@ -46,3 +46,6 @@ plot "data.txt" w p pt 7
 
 ### 12/15(Fri)
 - FFTの勉強。ブランチの整理。
+
+### 12/18(Sun)
+- Chapter02終了。
