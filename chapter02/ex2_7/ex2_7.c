@@ -10,9 +10,14 @@ int main(void)
   int n, k, N;
   double *x_real, *x_imag;
 
-  mono_wave_read(&pcm0, "ex2_1.wav"); /* WAVEファイルからモノラルの音データを入力する */
+  FILE *fp1, *fp2;
 
-  N = 64;
+  fp1 = fopen("data1.txt", "w");
+  fp2 = fopen("data2.txt", "w");
+
+  mono_wave_read(&pcm0, "guitar_A4.wav"); /* WAVEファイルからモノラルの音データを入力する */
+
+  N = 2048;
   x_real = calloc(N, sizeof(double)); /* メモリの確保 */
   x_imag = calloc(N, sizeof(double)); /* メモリの確保 */
 
@@ -27,8 +32,14 @@ int main(void)
   /* 周波数特性 */
   for (k = 0; k < N; k++)
   {
-    printf("%d %f+j%f\n", k, x_real[k], x_imag[k]);
+    //printf("%d %f+j%f\n", k, x_real[k], x_imag[k]);
+
+    fprintf(fp1, "%d %f\n", k * pcm0.fs / N, sqrt(pow(x_real[k], 2) + pow(x_imag[k], 2))); /* 振幅スペクトル */
+    fprintf(fp2, "%d %f\n", k * pcm0.fs / N, atan2((int)x_imag[k], (int)x_real[k]));       /* 位相スペクトル */
   }
+
+  fclose(fp1);
+  fclose(fp2);
 
   free(pcm0.s); /* メモリの解放 */
   free(x_real); /* メモリの解放 */
