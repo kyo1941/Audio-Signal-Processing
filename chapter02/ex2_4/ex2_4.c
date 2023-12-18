@@ -39,8 +39,8 @@ int main(void)
       X_real[k] += W_real * x_real[n] - W_imag * x_imag[n]; /* X(k)の実数部 */
       X_imag[k] += W_real * x_imag[n] + W_imag * x_real[n]; /* X(k)の虚数部 */
     }
-    fprintf(fp1, "%d %f\n", k * pcm0.fs/N, sqrt(pow(X_real[k], 2) + pow(X_imag[k], 2))); /* 振幅スペクトル */
-    fprintf(fp2, "%d %f\n", k * pcm0.fs/N, atan2((int)X_imag[k], (int)X_real[k]));       /* 位相スペクトル */
+    fprintf(fp1, "%d %f\n", k * pcm0.fs / N, sqrt(pow(X_real[k], 2) + pow(X_imag[k], 2))); /* 振幅スペクトル */
+    fprintf(fp2, "%d %f\n", k * pcm0.fs / N, atan2((int)X_imag[k], (int)X_real[k]));       /* 位相スペクトル */
   }
 
   /* 周波数特性 */

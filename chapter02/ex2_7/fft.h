@@ -1,4 +1,4 @@
-int log2(int x) /* y = log2(x) */
+int getLog2(int x) /* y = log2(x) */
 {
   int y;
   
@@ -34,7 +34,7 @@ void FFT(double x_real[], double x_imag[], int N)
   double a_real, a_imag, b_real, b_imag, c_real, c_imag, real, imag;
   
   /* FFTの段数 */
-  number_of_stage = log2(N);
+  number_of_stage = getLog2(N);
   
   /* バタフライ計算 */
   for (stage = 1; stage <= number_of_stage; stage++)
@@ -103,7 +103,7 @@ void IFFT(double x_real[], double x_imag[], int N)
   double a_real, a_imag, b_real, b_imag, c_real, c_imag, real, imag;
   
   /* IFFTの段数 */
-  number_of_stage = log2(N);
+  number_of_stage = getLog2(N);
   
   /* バタフライ計算 */
   for (stage = 1; stage <= number_of_stage; stage++)
