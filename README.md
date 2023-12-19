@@ -49,3 +49,4 @@ plot "data.txt" w p pt 7
 
 ### 12/18(Sun)
 - Chapter02終了。
+- chapter03用のファイルを追加。文字化けの修正。
