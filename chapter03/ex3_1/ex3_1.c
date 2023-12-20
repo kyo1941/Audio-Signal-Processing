@@ -9,6 +9,11 @@ int main(void)
   int n, m, i, repeat;
   double a, d;
 
+  FILE *fp1, *fp2;
+
+  fp1 = fopen("data1.txt", "w");
+  fp2 = fopen("data2.txt", "w");
+
   mono_wave_read(&pcm0, "sample01.wav"); /* WAVEファイルからモノラルの音データを入力する */
 
   pcm1.fs = pcm0.fs;                            /* 標本化周波数 */
@@ -36,6 +41,15 @@ int main(void)
   }
 
   mono_wave_write(&pcm1, "ex3_1.wav"); /* WAVEファイルにモノラルの音データを出力する */
+
+  for (n = 0; n < pcm1.length; n++)
+  {
+    fprintf(fp1, "%d %f\n", n, pcm0.s[n]);
+    fprintf(fp2, "%d %f\n", n, pcm1.s[n]);
+  }
+
+  fclose(fp1);
+  fclose(fp2);
 
   free(pcm0.s); /* メモリの解放 */
   free(pcm1.s); /* メモリの解放 */
