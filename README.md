@@ -1,10 +1,3 @@
-## gnuplot
-```
-plot "data.txt" w l
-```
-```
-plot "data.txt" w p pt 7
-```
 ## 青木氏ホームページ
 - <http://floor13.sakura.ne.jp/>  
 ※ 自動でhttpsに補完されてアクセスできない可能性あり。
@@ -55,4 +48,7 @@ plot "data.txt" w p pt 7
 - ex3_1:  スペクトル記入用のファイルの追加によって作動しなくなるバグ発生。
 
 ### 12/20(Wed)
-- ex3_1: **12/19**のバグを修正。
+- ex3_1: 12/19のバグを修正。
+
+### 12/21(Thu)
+- Chapter03終了。
