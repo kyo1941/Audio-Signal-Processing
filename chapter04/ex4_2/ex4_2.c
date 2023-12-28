@@ -21,23 +21,23 @@ int main(void)
   pcm1.length = pcm0.length;                    /* 音データの長さ */
   pcm1.s = calloc(pcm1.length, sizeof(double)); /* メモリの確保 */
   
-  gain = 10.0; /* ������ */
-  level = 0.5; /* ���x�� */
+  gain = 10.0; /* 増幅率 */
+  level = 0.5; /* レベル */
   
   for (n = 0; n < pcm1.length; n++)
   {
-    pcm1.s[n] = pcm0.s[n] * gain; /* 現在の音データを増幅 */
+    pcm1.s[n] = pcm0.s[n] * gain; /* 音データの増幅 */
     
     if (pcm1.s[n] >= 0.0)
     {
-      pcm1.s[n] = atan(pcm1.s[n]) / (M_PI / 2.0);       /* �N���b�s���O */
+      pcm1.s[n] = atan(pcm1.s[n]) / (M_PI / 2.0);       /* クリッピング */
     }
     else if (pcm1.s[n] < -0.0)
     {
-      pcm1.s[n] = atan(pcm1.s[n]) / (M_PI / 2.0) * 0.1; /* �N���b�s���O */
+      pcm1.s[n] = atan(pcm1.s[n]) / (M_PI / 2.0) * 0.1; /* クリッピング */
     }
     
-    pcm1.s[n] *= level; /* ���̑傫���𒲐߂��� */
+    pcm1.s[n] *= level; /* 音の大きさを調節 */
     fprintf(fp1, "%d %f\n", n, pcm0.s[n]);
     fprintf(fp2, "%d %f\n", n, pcm1.s[n]);
   }
