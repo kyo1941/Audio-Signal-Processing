@@ -7,6 +7,11 @@ int main(void)
   MONO_PCM pcm0, pcm1;
   int n;
   double gain, level;
+
+  FILE *fp1, *fp2;
+
+  fp1 = fopen("data1.txt", "w");
+  fp2 = fopen("data2.txt", "w");
   
   mono_wave_read(&pcm0, "sample02.wav"); /* WAVEファイルからモノラルの音データを入力 */
   
@@ -37,9 +42,14 @@ int main(void)
     }
     
     pcm1.s[n] *= level; /* ���̑傫���𒲐߂��� */
+    fprintf(fp1, "%d %f\n", n, pcm0.s[n]);
+    fprintf(fp2, "%d %f\n", n, pcm1.s[n]);
   }
   
   mono_wave_write(&pcm1, "ex4_3.wav"); /* WAVEファイルにモノラルの音データを出力する */
+
+  fclose(fp1);
+  fclose(fp2);
   
   free(pcm0.s); /* メモリの解放 */
   free(pcm1.s); /* メモリの解放 */
