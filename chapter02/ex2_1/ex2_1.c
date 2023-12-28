@@ -24,7 +24,7 @@ int main(void)
   /* サイン波 */
   for (n = 0; n < pcm1.length; n++)
   {
-    pcm1.s[n] = A * cos(2.0 * M_PI * f0 * n / pcm1.fs);
+    pcm1.s[n] = A * sin(2.0 * M_PI * f0 * n / pcm1.fs);
     fprintf(fp, "%d %f\n", n, pcm1.s[n]); /* サンプル-振幅 プロットデータ */
   }
 
