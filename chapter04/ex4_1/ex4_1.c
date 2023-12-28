@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "wave.h"
+#include "fft.h"
 
 int main(void)
 {

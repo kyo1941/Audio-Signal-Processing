@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "wave.h"
+#include "fft.h"
 
 int main(void)
 {
@@ -29,7 +30,7 @@ int main(void)
     {
       pcm0.s[n] *= -1.0; /* 音データを反転 */
     }
-    
+
     pcm1.s[n] = pcm0.s[n] * gain; /* 音データを増幅 */
     
     if (pcm1.s[n] > 1.0)
