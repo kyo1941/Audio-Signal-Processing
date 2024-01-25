@@ -8,6 +8,11 @@ int main(void)
   int n;
   double threshold, ratio, gain;
 
+  FILE *fp1, *fp2;
+
+  fp1 = fopen("data1.txt", "w");
+  fp2 = fopen("data2.txt", "w");
+
   mono_wave_read(&pcm0, "sample03.wav"); /* WAVEファイルからモノラルの音データを入力する */
 
   pcm1.fs = pcm0.fs;                            /* 標本化周波数 */
@@ -33,9 +38,14 @@ int main(void)
     }
 
     pcm1.s[n] *= gain; /* 振幅の増幅 */
+    fprintf(fp1, "%d %f\n", n, pcm0.s[n]);
+    fprintf(fp2, "%d %f\n", n, pcm1.s[n]);
   }
 
   mono_wave_write(&pcm1, "ex5_1.wav"); /* WAVEファイルにモノラルの音データを出力する */
+
+  fclose(fp1);
+  fclose(fp2);
 
   free(pcm0.s); /* メモリの解放 */
   free(pcm1.s); /* メモリの解放 */
