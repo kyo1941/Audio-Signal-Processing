@@ -1,10 +1,10 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+
 #include "wave.h"
 
-int main(void)
-{
+int main(void) {
   MONO_PCM pcm1;
   int n, i;
   double A, f0;
@@ -22,8 +22,7 @@ int main(void)
   f0 = 250.0; /* 基本周波数 */
 
   /* ノコギリ波 */
-  for (n = 0; n < pcm1.length; n++)
-  {
+  for (n = 0; n < pcm1.length; n++) {
     for (i = 1; i <= 15; i++) /* 15倍音までの重ね合わせ */
     {
       pcm1.s[n] += A / i * sin(2.0 * M_PI * f0 * i * n / pcm1.fs);
@@ -31,7 +30,8 @@ int main(void)
     fprintf(fp, "%d %f\n", n, pcm1.s[n]); /* サンプル-振幅 プロットデータ */
   }
 
-  mono_wave_write(&pcm1, "ex2_2.wav"); /* WAVEファイルにモノラルの音データを出力する */
+  mono_wave_write(&pcm1,
+                  "ex2_2.wav"); /* WAVEファイルにモノラルの音データを出力する */
 
   fclose(fp);
 
