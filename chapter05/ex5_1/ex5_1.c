@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "wave.h"
 
-int main(void)
-{
+int main(void) {
   MONO_PCM pcm0, pcm1;
   int n;
   double threshold, ratio, gain;
@@ -13,7 +13,8 @@ int main(void)
   fp1 = fopen("data1.txt", "w");
   fp2 = fopen("data2.txt", "w");
 
-  mono_wave_read(&pcm0, "sample03.wav"); /* WAVEファイルからモノラルの音データを入力する */
+  mono_wave_read(
+      &pcm0, "sample03.wav"); /* WAVEファイルからモノラルの音データを入力する */
 
   pcm1.fs = pcm0.fs;                            /* 標本化周波数 */
   pcm1.bits = pcm0.bits;                        /* 量子化精度 */
@@ -24,16 +25,12 @@ int main(void)
   ratio = 1.0 / 10.0;                                   /* レシオ */
   gain = 1.0 / (threshold + (1.0 - threshold) * ratio); /* 増幅率 */
 
-  for (n = 0; n < pcm1.length; n++)
-  {
+  for (n = 0; n < pcm1.length; n++) {
     pcm1.s[n] = pcm0.s[n];
 
-    if (pcm1.s[n] > threshold)
-    {
+    if (pcm1.s[n] > threshold) {
       pcm1.s[n] = threshold + (pcm1.s[n] - threshold) * ratio; /* 振幅の圧縮 */
-    }
-    else if (pcm0.s[n] < -threshold)
-    {
+    } else if (pcm0.s[n] < -threshold) {
       pcm1.s[n] = -threshold + (pcm0.s[n] + threshold) * ratio; /* 振幅の圧縮 */
     }
 
@@ -42,7 +39,8 @@ int main(void)
     fprintf(fp2, "%d %f\n", n, pcm1.s[n]);
   }
 
-  mono_wave_write(&pcm1, "ex5_1.wav"); /* WAVEファイルにモノラルの音データを出力する */
+  mono_wave_write(&pcm1,
+                  "ex5_1.wav"); /* WAVEファイルにモノラルの音データを出力する */
 
   fclose(fp1);
   fclose(fp2);
