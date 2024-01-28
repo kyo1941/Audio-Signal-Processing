@@ -12,41 +12,41 @@ int main(void)
   int n, m, J, L, offset, frame, number_of_frame;
   double fe, delta, *b, *w, *x, *y;
   
-  mono_wave_read(&pcm0, "sample04.wav"); /* WAVEƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğ“ü—Í‚·‚é */
+  mono_wave_read(&pcm0, "sample04.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã™ã‚‹ */
   
-  pcm1.fs = pcm0.fs; /* •W–{‰»ü”g” */
-  pcm1.bits = pcm0.bits; /* —Êq‰»¸“x */
-  pcm1.length = pcm0.length; /* ‰¹ƒf[ƒ^‚Ì’·‚³ */
-  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  pcm1.fs = pcm0.fs; /* æ¨™æœ¬åŒ–å‘¨æ³¢æ•° */
+  pcm1.bits = pcm0.bits; /* é‡å­åŒ–ç²¾åº¦ */
+  pcm1.length = pcm0.length; /* éŸ³ãƒ‡ãƒ¼ã‚¿ã®é•·ã• */
+  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
-  fe = 1000.0 / pcm0.fs; /* ƒGƒbƒWü”g” */
-  delta = 1000.0 / pcm0.fs; /* ‘JˆÚ‘Ñˆæ• */
+  fe = 1000.0 / pcm0.fs; /* ã‚¨ãƒƒã‚¸å‘¨æ³¢æ•° */
+  delta = 1000.0 / pcm0.fs; /* é·ç§»å¸¯åŸŸå¹… */
   
-  J = (int)(3.1 / delta + 0.5) - 1; /* ’x‰„Ší‚Ì” */
+  J = (int)(3.1 / delta + 0.5) - 1; /* é…å»¶æœŸã®æ•° */
   if (J % 2 == 1)
   {
-    J++; /* J+1‚ªŠï”‚É‚È‚é‚æ‚¤‚É’²®‚·‚é */
+    J++; /* J+1ãŒå¥‡æ•°ã«ãªã‚‹ã‚ˆã†ã«ã™ã‚‹ */
   }
   
-  b = calloc((J + 1), sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  w = calloc((J + 1), sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  b = calloc((J + 1), sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  w = calloc((J + 1), sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
-  Hanning_window(w, (J + 1)); /* ƒnƒjƒ“ƒO‘‹ */
+  Hanning_window(w, (J + 1)); /* ãƒãƒ‹ãƒ³ã‚°çª“ */
   
-  FIR_LPF(fe, J, b, w); /* FIRƒtƒBƒ‹ƒ^‚ÌİŒv */
+  FIR_LPF(fe, J, b, w); /* FIRãƒ•ã‚£ãƒ«ã‚¿ã®è¨­è¨ˆ */
   
-  L = 256; /* ƒtƒŒ[ƒ€‚Ì’·‚³ */
+  L = 256; /* ãƒ•ãƒ¬ãƒ¼ãƒ ã®é•·ã• */
   
-  number_of_frame = pcm0.length / L; /* ƒtƒŒ[ƒ€‚Ì” */
+  number_of_frame = pcm0.length / L; /* ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ•° */
   
-  x = calloc((L + J), sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  y = calloc(L, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  x = calloc((L + J), sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  y = calloc(L, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
   for (frame = 0; frame < number_of_frame; frame++)
   {
     offset = L * frame;
     
-    /* ’¼‘O‚ÌƒtƒŒ[ƒ€‚ÌŒã”¼‚ÌJƒTƒ“ƒvƒ‹‚ğ‚Â‚¯‰Á‚¦‚é */
+    /* ï¿½ï¿½ï¿½Oï¿½Ìƒtï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÌŒã”¼ï¿½ï¿½Jï¿½Tï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     for (n = 0; n < L + J; n++)
     {
       if (offset - J + n < 0)
@@ -64,7 +64,7 @@ int main(void)
       y[n] = 0.0;
     }
     
-    /* ƒtƒBƒ‹ƒ^ƒŠƒ“ƒO */
+    /* ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚° */
     for (n = 0; n < L; n++)
     {
       for (m = 0; m <= J; m++)
@@ -73,21 +73,21 @@ int main(void)
       }
     }
     
-    /* ƒtƒBƒ‹ƒ^ƒŠƒ“ƒOŒ‹‰Ê‚Ì˜AŒ‹ */
+    /* ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ï¿½ï¿½ï¿½Ê‚Ì˜Aï¿½ï¿½ */
     for (n = 0; n < L; n++)
     {
       pcm1.s[offset + n] = y[n];
     }
   }
   
-  mono_wave_write(&pcm1, "ex6_3.wav"); /* WAVEƒtƒ@ƒCƒ‹‚Éƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğo—Í‚·‚é */
+  mono_wave_write(&pcm1, "ex6_3.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã«ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹ */
   
-  free(pcm0.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(pcm1.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(b); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(w); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(x); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(y); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
+  free(pcm0.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(pcm1.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(b); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(w); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(x); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(y); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
   
   return 0;
 }

@@ -13,46 +13,46 @@ int main(void)
   int n, m, k, J, L, N, offset, frame, number_of_frame;
   double fe, delta, *b, *w, *b_real, *b_imag, *x_real, *x_imag, *y_real, *y_imag;
   
-  mono_wave_read(&pcm0, "sample04.wav"); /* WAVEƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğ“ü—Í‚·‚é */
+  mono_wave_read(&pcm0, "sample04.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã™ã‚‹ */
   
-  pcm1.fs = pcm0.fs; /* •W–{‰»ü”g” */
-  pcm1.bits = pcm0.bits; /* —Êq‰»¸“x */
-  pcm1.length = pcm0.length; /* ‰¹ƒf[ƒ^‚Ì’·‚³ */
-  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  pcm1.fs = pcm0.fs; /* æ¨™æœ¬åŒ–å‘¨æ³¢æ•° */
+  pcm1.bits = pcm0.bits; /* é‡å­åŒ–ç²¾åº¦ */
+  pcm1.length = pcm0.length; /* éŸ³ãƒ‡ãƒ¼ã‚¿ã®é•·ã• */
+  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
-  fe = 1000.0 / pcm0.fs; /* ƒGƒbƒWü”g” */
-  delta = 1000.0 / pcm0.fs; /* ‘JˆÚ‘Ñˆæ• */
+  fe = 1000.0 / pcm0.fs; /* ã‚¨ãƒƒã‚¸å‘¨æ³¢æ•° */
+  delta = 1000.0 / pcm0.fs; /* é·ç§»å¸¯åŸŸå¹… */
   
-  J = (int)(3.1 / delta + 0.5) - 1; /* ’x‰„Ší‚Ì” */
+  J = (int)(3.1 / delta + 0.5) - 1; /* é…å»¶æœŸã®æ•° */
   if (J % 2 == 1)
   {
-    J++; /* J+1‚ªŠï”‚É‚È‚é‚æ‚¤‚É’²®‚·‚é */
+    J++; /* J+1ãŒå¥‡æ•°ã«ãªã‚‹ã‚ˆã†ã«èª¿æ•´ã™ã‚‹ */
   }
   
-  b = calloc((J + 1), sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  w = calloc((J + 1), sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  b = calloc((J + 1), sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  w = calloc((J + 1), sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
-  Hanning_window(w, (J + 1)); /* ƒnƒjƒ“ƒO‘‹ */
+  Hanning_window(w, (J + 1)); /* ãƒãƒ‹ãƒ³ã‚°çª“ */
   
-  FIR_LPF(fe, J, b, w); /* FIRƒtƒBƒ‹ƒ^‚ÌİŒv */
+  FIR_LPF(fe, J, b, w); /* FIRãƒ•ã‚£ãƒ«ã‚¿ã®è¨­è¨ˆ */
   
-  L = 256; /* ƒtƒŒ[ƒ€‚Ì’·‚³ */
-  N = 512; /* DFT‚ÌƒTƒCƒY */
+  L = 256; /* ãƒ•ãƒ¬ãƒ¼ãƒ ã®é•·ã• */
+  N = 512; /* DFTã®ã‚µã‚¤ã‚º */
   
-  number_of_frame = pcm0.length / L; /* ƒtƒŒ[ƒ€‚Ì” */
+  number_of_frame = pcm0.length / L; /* ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ•° */
   
-  b_real = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  b_imag = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  x_real = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  x_imag = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  y_real = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
-  y_imag = calloc(N, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  b_real = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  b_imag = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  x_real = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  x_imag = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  y_real = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
+  y_imag = calloc(N, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
   for (frame = 0; frame < number_of_frame; frame++)
   {
     offset = L * frame;
     
-    /* x(n)‚ÌFFT */
+    /* x(n)ã®FFT */
     for (n = 0; n < N; n++)
     {
       x_real[n] = 0.0;
@@ -64,7 +64,7 @@ int main(void)
     }
     FFT(x_real, x_imag, N);
     
-    /* b(m)‚ÌFFT */
+    /* b(m)ã®FFT */
     for (m = 0; m < N; m++)
     {
       b_real[m] = 0.0;
@@ -76,7 +76,7 @@ int main(void)
     }
     FFT(b_real, b_imag, N);
     
-    /* ƒtƒBƒ‹ƒ^ƒŠƒ“ƒO */
+    /* ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚° */
     for (k = 0; k < N; k++)
     {
       y_real[k] = x_real[k] * b_real[k] - x_imag[k] * b_imag[k];
@@ -84,7 +84,7 @@ int main(void)
     }
     IFFT(y_real, y_imag, N);
     
-    /* ƒtƒBƒ‹ƒ^ƒŠƒ“ƒOŒ‹‰Ê‚Ì˜AŒ‹ */
+    /* ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®çµæœã®é€£çµ */
     for (n = 0; n < L * 2; n++)
     {
       if (offset + n < pcm1.length)
@@ -94,18 +94,18 @@ int main(void)
     }
   }
   
-  mono_wave_write(&pcm1, "ex6_5.wav"); /* WAVEƒtƒ@ƒCƒ‹‚Éƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğo—Í‚·‚é */
+  mono_wave_write(&pcm1, "ex6_5.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã«ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹ */
   
-  free(pcm0.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(pcm1.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(b); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(w); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(b_real); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(b_imag); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(x_real); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(x_imag); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(y_real); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(y_imag); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
+  free(pcm0.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(pcm1.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(b); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(w); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(b_real); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(b_imag); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(x_real); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(x_imag); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(y_real); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(y_imag); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
   
   return 0;
 }
