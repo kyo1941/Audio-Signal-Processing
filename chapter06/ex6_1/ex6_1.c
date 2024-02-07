@@ -23,23 +23,23 @@ int main(void) {
   fe = 1000.0 / pcm0.fs;    /* エッジ周波数 */
   delta = 1000.0 / pcm0.fs; /* 遷移帯域幅 */
 
-  J = (int)(3.1 / delta + 0.5) - 1; /* 遅延期の数 */
+  J = (int)(3.1 / delta + 0.5) - 1; /* 遅延期の数（0.5を足して切り捨て = 四捨五入） */
   if (J % 2 == 1) {
     J++; /* J+1が奇数になるように調整する */
   }
 
-  b = calloc((J + 1), sizeof(double)); /* メモリの確保 */
-  w = calloc((J + 1), sizeof(double)); /* メモリの確保 */
+  b = calloc((J + 1), sizeof(double)); /* メモリの確保（フィルタ用の配列） */
+  w = calloc((J + 1), sizeof(double)); /* メモリの確保（窓関数用の配列） */
 
-  Hanning_window(w, (J + 1)); /* ハニング窓 */
+  Hanning_window(w, (J + 1)); /* ハニング窓（フィルタの数がシンク関数の周期の整数倍とならない（にくい）ため） */
 
   FIR_LPF(fe, J, b, w); /* FIRフィルタの設計 */
 
   /* フィルタリング */
-  for (n = 0; n < pcm1.length; n++) {
+  for (n = 0; n < pcm1.length; n++) { /* 出力信号の長さを入力信号の長さに揃える */
     for (m = 0; m <= J; m++) {
       if (n - m >= 0) {
-        pcm1.s[n] += b[m] * pcm0.s[n - m];
+        pcm1.s[n] += b[m] * pcm0.s[n - m];  /* 畳み込みの計算 */
       }
     }
   }

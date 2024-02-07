@@ -4,11 +4,11 @@ void FIR_LPF(double fe, int J, double b[], double w[])
   int offset;
   
   offset = J / 2;
-  for (m = -J / 2; m <= J / 2; m++)
+  for (m = -J / 2; m <= J / 2; m++) /* シンク関数の-J/2 ~ J/2を利用 */
   {
-    b[offset + m] = 2.0 * fe * sinc(2.0 * M_PI * fe * m);
+    b[offset + m] = 2.0 * fe * sinc(2.0 * M_PI * fe * m); /* 配列自体は 0 ~ J に揃える（窓関数を適用させるため） */
   }
-  
+
   for (m = 0; m < J + 1; m++)
   {
     b[m] *= w[m];
