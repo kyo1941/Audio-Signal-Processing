@@ -31,7 +31,7 @@ int main(void) {
 
   pcm2.fs = pcm0.fs;
   pcm2.bits = pcm0.bits;
-  pcm1.length = pcm0.length;
+  pcm2.length = pcm0.length;
   pcm2.length += J; /* 畳み込みの出力信号の長さを適切にする */
   pcm2.s = calloc(pcm1.length, sizeof(double));
 
@@ -69,6 +69,7 @@ int main(void) {
 
   free(pcm0.s); /* メモリの解放 */
   free(pcm1.s); /* メモリの解放 */
+  free(pcm2.s); /* メモリの解放 */
   free(b);      /* メモリの解放 */
   free(w);      /* メモリの解放 */
 
