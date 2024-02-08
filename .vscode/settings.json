@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "math.h": "c"
+        "math.h": "c",
+        "fir_filter.h": "c",
+        "stdlib.h": "c"
     }
 }
