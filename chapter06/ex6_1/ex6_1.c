@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "sinc.h"
 #include "fir_filter.h"
+#include "sinc.h"
 #include "wave.h"
 #include "window_function.h"
 
 int main(void) {
-  MONO_PCM pcm0, pcm1;
+  MONO_PCM pcm0, pcm1, pcm2;
   int n, m, J;
   double fe, delta, *b, *w;
 
@@ -18,7 +18,7 @@ int main(void) {
   pcm1.fs = pcm0.fs;                            /* 標本化周波数 */
   pcm1.bits = pcm0.bits;                        /* 量子化精度 */
   pcm1.length = pcm0.length;                    /* 音データの長さ */
-  //pcm1.s = calloc(pcm1.length, sizeof(double)); /* メモリの確保 */
+  pcm1.s = calloc(pcm1.length, sizeof(double)); /* メモリの確保 */
 
   fe = 1000.0 / pcm0.fs;    /* エッジ周波数 */
   delta = 1000.0 / pcm0.fs; /* 遷移帯域幅 */
@@ -28,8 +28,12 @@ int main(void) {
   if (J % 2 == 1) {
     J++; /* J+1が奇数になるように調整する */
   }
-  pcm1.length += J; /* 畳み込みの出力信号の長さを適切にする */
-  pcm1.s = calloc(pcm1.length, sizeof(double));
+
+  pcm2.fs = pcm0.fs;
+  pcm2.bits = pcm0.bits;
+  pcm1.length = pcm0.length;
+  pcm2.length += J; /* 畳み込みの出力信号の長さを適切にする */
+  pcm2.s = calloc(pcm1.length, sizeof(double));
 
   b = calloc((J + 1), sizeof(double)); /* メモリの確保（フィルタ用の配列） */
   w = calloc((J + 1), sizeof(double)); /* メモリの確保（窓関数用の配列） */
@@ -58,9 +62,9 @@ int main(void) {
     }
   }
   */
-
-  mono_wave_write(&pcm1,
-                  "ex6_1_2.wav"); /* WAVEファイルにモノラルの音データを出力する */
+  
+  mono_wave_write(
+      &pcm1, "ex6_1_2.wav"); /* WAVEファイルにモノラルの音データを出力する */
 
   free(pcm0.s); /* メモリの解放 */
   free(pcm1.s); /* メモリの解放 */
