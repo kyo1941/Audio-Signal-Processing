@@ -8,9 +8,15 @@
 #include "window_function.h"
 
 int main(void) {
-  MONO_PCM pcm0, pcm1;
+  MONO_PCM pcm0, pcm1, pcm2;
   int n, m, J;
   double fe, delta, *b, *w;
+
+  FILE *fp1, *fp2, *fp3;
+
+  fp1 = fopen("data1.txt", "w");
+  fp2 = fopen("data2.txt", "w");
+  fp3 = fopen("data3.txt", "w");
 
   mono_wave_read(
       &pcm0, "sample04.wav"); /* WAVEファイルからモノラルの音データを入力する */
@@ -29,6 +35,12 @@ int main(void) {
     J++; /* J+1が奇数になるように調整する */
   }
 
+  pcm2.fs = pcm0.fs;
+  pcm2.bits = pcm0.bits;
+  pcm2.length = pcm0.length;
+  pcm2.length += J; /* 畳み込みの出力信号の長さを適切にする */
+  pcm2.s = calloc(pcm1.length, sizeof(double));
+
   b = calloc((J + 1), sizeof(double)); /* メモリの確保（フィルタ用の配列） */
   w = calloc((J + 1), sizeof(double)); /* メモリの確保（窓関数用の配列） */
 
@@ -46,13 +58,38 @@ int main(void) {
     }
   }
 
-  mono_wave_write(&pcm1,
-                  "ex6_1.wav"); /* WAVEファイルにモノラルの音データを出力する */
+  /* フィルタリング（出力信号の長さを適切にした場合） */
+  for (n = 0; n < pcm2.length; n++) {
+    for (m = 0; m <= J; m++) {
+      if (n - m >= pcm0.length) {
+        pcm2.s[n] += 0;
+      } else if (n - m >= 0) {
+        pcm2.s[n] += b[m] * pcm0.s[n - m];
+      }
+    }
+  }
+
+  for (int i = 0; i < pcm2.length; i++) {
+    if(i < pcm1.length) {
+      fprintf(fp1, "%d %f\n", i, pcm0.s[i]);
+      fprintf(fp2, "%d %f\n", i, pcm1.s[i]);
+    }
+    fprintf(fp3, "%d %f\n", i, pcm2.s[i]);
+  }
+
+  mono_wave_write(&pcm1, "ex6_1.wav");
+  mono_wave_write(
+      &pcm2, "ex6_1_2.wav"); /* WAVEファイルにモノラルの音データを出力する */
 
   free(pcm0.s); /* メモリの解放 */
   free(pcm1.s); /* メモリの解放 */
+  free(pcm2.s); /* メモリの解放 */
   free(b);      /* メモリの解放 */
   free(w);      /* メモリの解放 */
+
+  fclose(fp1);
+  fclose(fp2);
+  fclose(fp3);
 
   return 0;
 }
