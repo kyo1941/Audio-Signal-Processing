@@ -53,16 +53,16 @@ int main(void) {
   }
 
   /* フィルタリング（出力信号の長さを適切にした場合） */
-  /*
-  for (n = 0; n < pcm1.length; n++) {
+  for (n = 0; n < pcm2.length; n++) {
     for (m = 0; m <= J; m++) {
-      if (n - m >= 0) {
-        pcm1.s[n] += b[m] * pcm0.s[n - m];
+      if (n - m >= pcm0.length) {
+        pcm2.s[n] += 0;
+      } else if (n - m >= 0) {
+        pcm2.s[n] += b[m] * pcm0.s[n - m];
       }
     }
   }
-  */
-  
+
   mono_wave_write(&pcm1, "ex6_1.wav");
   mono_wave_write(
       &pcm2, "ex6_1_2.wav"); /* WAVEファイルにモノラルの音データを出力する */
