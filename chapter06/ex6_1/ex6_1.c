@@ -63,8 +63,9 @@ int main(void) {
   }
   */
   
+  mono_wave_write(&pcm1, "ex6_1.wav");
   mono_wave_write(
-      &pcm1, "ex6_1_2.wav"); /* WAVEファイルにモノラルの音データを出力する */
+      &pcm2, "ex6_1_2.wav"); /* WAVEファイルにモノラルの音データを出力する */
 
   free(pcm0.s); /* メモリの解放 */
   free(pcm1.s); /* メモリの解放 */
