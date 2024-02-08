@@ -2,6 +2,7 @@
     "files.associations": {
         "math.h": "c",
         "fir_filter.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "wave.h": "c"
     }
 }
