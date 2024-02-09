@@ -1,7 +1,8 @@
-void IIR_LPF(double fc, double Q, double a[], double b[])
-{
+void IIR_LPF(double fc, double Q, double a[], double b[]) {
+  /* デジタルフィルタの周波数からアナログフィルタの周波数に変換 */
   fc = tan(M_PI * fc) / (2.0 * M_PI);
   
+  /* フィルタ係数 */
   a[0] = 1.0 + 2.0 * M_PI * fc / Q + 4.0 * M_PI * M_PI * fc * fc;
   a[1] = (8.0 * M_PI * M_PI * fc * fc - 2.0) / a[0];
   a[2] = (1.0 - 2.0 * M_PI * fc / Q + 4.0 * M_PI * M_PI * fc * fc) / a[0];
@@ -9,6 +10,7 @@ void IIR_LPF(double fc, double Q, double a[], double b[])
   b[1] = 8.0 * M_PI * M_PI * fc * fc / a[0];
   b[2] = 4.0 * M_PI * M_PI * fc * fc / a[0];
   
+  /* 便宜上、1にしておく（フィードバックであるため本来IIRにa[0]は不要）*/
   a[0] = 1.0;
 }
 
