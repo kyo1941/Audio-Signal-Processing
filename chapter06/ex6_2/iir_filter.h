@@ -17,6 +17,7 @@ void IIR_LPF(double fc, double Q, double a[], double b[]) {
 void IIR_HPF(double fc, double Q, double a[], double b[]) {
   fc = tan(M_PI * fc) / (2.0 * M_PI);
 
+
   a[0] = 1.0 + 2.0 * M_PI * fc / Q + 4.0 * M_PI * M_PI * fc * fc;
   a[1] = (8.0 * M_PI * M_PI * fc * fc - 2.0) / a[0];
   a[2] = (1.0 - 2.0 * M_PI * fc / Q + 4.0 * M_PI * M_PI * fc * fc) / a[0];
@@ -60,6 +61,7 @@ void IIR_BEF(double fc1, double fc2, double a[], double b[]) {
 void IIR_resonator(double fc, double Q, double a[], double b[]) {
   fc = tan(M_PI * fc) / (2.0 * M_PI);
 
+
   a[0] = 1.0 + 2.0 * M_PI * fc / Q + 4.0 * M_PI * M_PI * fc * fc;
   a[1] = (8.0 * M_PI * M_PI * fc * fc - 2.0) / a[0];
   a[2] = (1.0 - 2.0 * M_PI * fc / Q + 4.0 * M_PI * M_PI * fc * fc) / a[0];
@@ -67,11 +69,13 @@ void IIR_resonator(double fc, double Q, double a[], double b[]) {
   b[1] = 0.0;
   b[2] = -2.0 * M_PI * fc / Q / a[0];
 
+
   a[0] = 1.0;
 }
 
 void IIR_notch(double fc, double Q, double a[], double b[]) {
   fc = tan(M_PI * fc) / (2.0 * M_PI);
+
 
   a[0] = 1.0 + 2.0 * M_PI * fc / Q + 4.0 * M_PI * M_PI * fc * fc;
   a[1] = (8.0 * M_PI * M_PI * fc * fc - 2.0) / a[0];
