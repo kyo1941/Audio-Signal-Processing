@@ -10,6 +10,11 @@ int main(void) {
   int n, m, I, J;
   double fc, Q, a[3], b[3];
 
+  FILE *fp1, *fp2;
+
+  fp1 = fopen("data1.txt", "w");
+  fp2 = fopen("data2.txt", "w");
+
   mono_wave_read(
       &pcm0, "sample04.wav"); /* WAVEファイルからモノラルの音データを入力する */
 
@@ -37,6 +42,9 @@ int main(void) {
         pcm1.s[n] += -a[m] * pcm1.s[n - m];
       }
     }
+
+    fprintf(fp1, "%d %f\n", n, pcm0.s[n]);
+    fprintf(fp2, "%d %f\n", n, pcm1.s[n]);
   }
 
   mono_wave_write(&pcm1,
@@ -44,6 +52,9 @@ int main(void) {
 
   free(pcm0.s); /* メモリの解放 */
   free(pcm1.s); /* メモリの解放 */
+
+  fclose(fp1);
+  fclose(fp2);
 
   return 0;
 }
