@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "fft.h"
 #include "sinc.h"
 #include "fir_filter.h"
 #include "wave.h"
@@ -9,14 +10,17 @@
 
 int main(void) {
   MONO_PCM pcm0, pcm1, pcm2;
-  int n, m, J;
+  int n, m, J, N;
   double fe, delta, *b, *w;
+  double *x_real, *x_imag, *y_real, *y_imag;
 
-  FILE *fp1, *fp2, *fp3;
+  FILE *fp1, *fp2, *fp3, *fp4, *fp5;
 
   fp1 = fopen("data1.txt", "w");
   fp2 = fopen("data2.txt", "w");
   fp3 = fopen("data3.txt", "w");
+  fp4 = fopen("spec1.txt", "w");
+  fp5 = fopen("spec2.txt", "w");
 
   mono_wave_read(
       &pcm0, "sample04.wav"); /* WAVEファイルからモノラルの音データを入力する */
@@ -40,6 +44,12 @@ int main(void) {
   pcm2.length = pcm0.length;
   pcm2.length += J; /* 畳み込みの出力信号の長さを適切にする */
   pcm2.s = calloc(pcm1.length, sizeof(double));
+
+  N = 2048;
+  x_real = calloc(N, sizeof(double)); /* メモリの確保 */
+  x_imag = calloc(N, sizeof(double)); /* メモリの確保 */
+  y_real = calloc(N, sizeof(double)); /* メモリの確保 */
+  y_imag = calloc(N, sizeof(double)); /* メモリの確保 */
 
   b = calloc((J + 1), sizeof(double)); /* メモリの確保（フィルタ用の配列） */
   w = calloc((J + 1), sizeof(double)); /* メモリの確保（窓関数用の配列） */
@@ -69,12 +79,29 @@ int main(void) {
     }
   }
 
+  for (int n = 0; n < N; n++) {
+    x_real[n] = pcm0.s[n];
+    x_imag[n] = 0.0;
+    y_real[n] = pcm1.s[n];
+    y_imag[n] = 0.0;
+  }
+
+  FFT(x_real, x_imag, N);
+  FFT(y_real, y_imag, N);
+
   for (int i = 0; i < pcm2.length; i++) {
-    if(i < pcm1.length) {
+    if (i < pcm1.length) {
       fprintf(fp1, "%d %f\n", i, pcm0.s[i]);
       fprintf(fp2, "%d %f\n", i, pcm1.s[i]);
     }
     fprintf(fp3, "%d %f\n", i, pcm2.s[i]);
+  }
+
+  for (int i = 0; i < N; i++) {
+    fprintf(fp4, "%d %f\n", i * pcm0.fs / N,
+            sqrt(pow(x_real[i], 2) + pow(x_imag[i], 2)));
+    fprintf(fp5, "%d %f\n", i * pcm1.fs / N,
+            sqrt(pow(y_real[i], 2) + pow(y_imag[i], 2)));
   }
 
   mono_wave_write(&pcm1, "ex6_1.wav");
@@ -90,6 +117,8 @@ int main(void) {
   fclose(fp1);
   fclose(fp2);
   fclose(fp3);
+  fclose(fp4);
+  fclose(fp5);
 
   return 0;
 }

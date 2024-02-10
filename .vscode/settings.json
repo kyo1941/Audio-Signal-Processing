@@ -3,6 +3,7 @@
         "math.h": "c",
         "fir_filter.h": "c",
         "stdlib.h": "c",
-        "wave.h": "c"
+        "wave.h": "c",
+        "window_function.h": "c"
     }
 }
