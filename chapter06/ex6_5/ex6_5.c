@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 #include "fft.h"
-#include "fir_filter.h"
 #include "sinc.h"
+#include "fir_filter.h"
 #include "wave.h"
 #include "window_function.h"
 

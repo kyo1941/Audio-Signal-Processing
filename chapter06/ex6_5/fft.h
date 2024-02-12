@@ -1,4 +1,4 @@
-int log2(int x) /* y = log2(x) */
+int getLog2(int x) /* y = log2(x) */
 {
   int y;
   
@@ -33,10 +33,10 @@ void FFT(double x_real[], double x_imag[], int N)
   int i, j, k, n, m, r, stage, number_of_stage, *index;
   double a_real, a_imag, b_real, b_imag, c_real, c_imag, real, imag;
   
-  /* FFT‚Ì’i” */
-  number_of_stage = log2(N);
+  /* FFTã®æ®µæ•° */
+  number_of_stage = getLog2(N);
   
-  /* ƒoƒ^ƒtƒ‰ƒCŒvZ */
+  /* ãƒã‚¿ãƒ•ãƒ©ã‚¤è¨ˆç®— */
   for (stage = 1; stage <= number_of_stage; stage++)
   {
     for (i = 0; i < pow2(stage - 1); i++)
@@ -70,7 +70,7 @@ void FFT(double x_real[], double x_imag[], int N)
     }
   }
   
-  /* ƒCƒ“ƒfƒbƒNƒX‚Ì•À‚Ñ‘Ö‚¦‚Ì‚½‚ß‚Ìƒe[ƒuƒ‹‚Ìì¬ */
+  /* ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ä¸¦ã³æ›¿ãˆã®ãŸã‚ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ */
   index = calloc(N, sizeof(int));
   for (stage = 1; stage <= number_of_stage; stage++)
   {
@@ -80,7 +80,7 @@ void FFT(double x_real[], double x_imag[], int N)
     }
   }
   
-  /* ƒCƒ“ƒfƒbƒNƒX‚Ì•À‚Ñ‘Ö‚¦ */
+  /* ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ä¸¦ã³æ›¿ãˆ */
   for (k = 0; k < N; k++)
   {
     if (index[k] > k)
@@ -102,10 +102,10 @@ void IFFT(double x_real[], double x_imag[], int N)
   int i, j, k, n, m, r, stage, number_of_stage, *index;
   double a_real, a_imag, b_real, b_imag, c_real, c_imag, real, imag;
   
-  /* IFFT‚Ì’i” */
-  number_of_stage = log2(N);
+  /* IFFTã®æ®µæ•° */
+  number_of_stage = getLog2(N);
   
-  /* ƒoƒ^ƒtƒ‰ƒCŒvZ */
+  /* ãƒã‚¿ãƒ•ãƒ©ã‚¤è¨ˆç®— */
   for (stage = 1; stage <= number_of_stage; stage++)
   {
     for (i = 0; i < pow2(stage - 1); i++)
@@ -139,7 +139,7 @@ void IFFT(double x_real[], double x_imag[], int N)
     }
   }
   
-  /* ƒCƒ“ƒfƒbƒNƒX‚Ì•À‚Ñ‘Ö‚¦‚Ì‚½‚ß‚Ìƒe[ƒuƒ‹‚Ìì¬ */
+  /* ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ä¸¦ã³æ›¿ãˆã®ãŸã‚ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ */
   index = calloc(N, sizeof(int));
   for (stage = 1; stage <= number_of_stage; stage++)
   {
@@ -149,7 +149,7 @@ void IFFT(double x_real[], double x_imag[], int N)
     }
   }
   
-  /* ƒCƒ“ƒfƒbƒNƒX‚Ì•À‚Ñ‘Ö‚¦ */
+  /* ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ä¸¦ã³æ›¿ãˆ */
   for (k = 0; k < N; k++)
   {
     if (index[k] > k)
@@ -161,9 +161,9 @@ void IFFT(double x_real[], double x_imag[], int N)
       x_real[k] = real;
       x_imag[k] = imag;
     }
-  }
+  }                                                                                                                                                        
   
-  /* ŒvZŒ‹‰Ê‚ğN‚ÅŠ„‚é */
+  /* ï¿½vï¿½Zï¿½ï¿½ï¿½Ê‚ï¿½Nï¿½ÅŠï¿½ï¿½ï¿½ */
   for (k = 0; k < N; k++)
   {
     x_real[k] /= N;
