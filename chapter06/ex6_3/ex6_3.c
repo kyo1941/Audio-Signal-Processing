@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "fir_filter.h"
 #include "sinc.h"
+#include "fir_filter.h"
 #include "wave.h"
 #include "window_function.h"
 
@@ -45,8 +45,7 @@ int main(void) {
   for (frame = 0; frame < number_of_frame; frame++) {
     offset = L * frame;
 
-    /* ���O�̃t���[���̌㔼��J�T���v������������
-     */
+    /* フレームの準備（付加するJサンプル含め） */
     for (n = 0; n < L + J; n++) {
       if (offset - J + n < 0) {
         x[n] = 0.0;
@@ -55,6 +54,7 @@ int main(void) {
       }
     }
 
+    /* 初期化 */
     for (n = 0; n < L; n++) {
       y[n] = 0.0;
     }
@@ -66,7 +66,7 @@ int main(void) {
       }
     }
 
-    /* フィルタリング���ʂ̘A�� */
+    /* フィルタリングの結果の連結 */
     for (n = 0; n < L; n++) {
       pcm1.s[offset + n] = y[n];
     }
