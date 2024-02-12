@@ -35,8 +35,7 @@ int main(void) {
   for (frame = 0; frame < number_of_frame; frame++) {
     offset = L * frame;
 
-    /* ���O�̃t���[���̌㔼��J�T���v������������
-     */
+    /* フレームの準備（付加するJサンプル含め）*/
     for (n = 0; n < L + J; n++) {
       if (offset - J + n < 0) {
         x[n] = 0.0;
@@ -45,8 +44,7 @@ int main(void) {
       }
     }
 
-    /* ���O�̃t�B���^�����O���ʂ̌㔼��I�T���v������������
-     */
+    /* フィードバック配列のフレームを準備（付加するIサンプル含め）*/
     for (n = 0; n < L + I; n++) {
       if (offset - I + n < 0) {
         y[n] = 0.0;
@@ -65,7 +63,7 @@ int main(void) {
       }
     }
 
-    /* フィルタリング���ʂ̘A�� */
+    /* フィルタリングの結果を保存 */
     for (n = 0; n < L; n++) {
       pcm1.s[offset + n] = y[I + n];
     }
