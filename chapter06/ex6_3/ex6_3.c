@@ -45,8 +45,7 @@ int main(void) {
   for (frame = 0; frame < number_of_frame; frame++) {
     offset = L * frame;
 
-    /* ���O�̃t���[���̌㔼��J�T���v������������
-     */
+    /* フレームの準備（付加するJサンプル含め） */
     for (n = 0; n < L + J; n++) {
       if (offset - J + n < 0) {
         x[n] = 0.0;
