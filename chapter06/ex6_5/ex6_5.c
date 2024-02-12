@@ -13,6 +13,12 @@ int main(void) {
   int n, m, k, J, L, N, offset, frame, number_of_frame;
   double fe, delta, *b, *w, *b_real, *b_imag, *x_real, *x_imag, *y_real,
       *y_imag;
+  double *x2_real, *x2_imag, *y2_real, *y2_imag;
+
+  FILE *fp1, *fp2;
+
+  fp1 = fopen("spec1.txt", "w");
+  fp2 = fopen("spec2.txt", "w");
 
   mono_wave_read(
       &pcm0, "sample04.wav"); /* WAVEファイルからモノラルの音データを入力する */
@@ -48,6 +54,11 @@ int main(void) {
   x_imag = calloc(N, sizeof(double)); /* メモリの確保 */
   y_real = calloc(N, sizeof(double)); /* メモリの確保 */
   y_imag = calloc(N, sizeof(double)); /* メモリの確保 */
+
+  x2_real = calloc(N, sizeof(double)); /* メモリの確保 */
+  x2_imag = calloc(N, sizeof(double)); /* メモリの確保 */
+  y2_real = calloc(N, sizeof(double)); /* メモリの確保 */
+  y2_imag = calloc(N, sizeof(double)); /* メモリの確保 */
 
   for (frame = 0; frame < number_of_frame; frame++) {
     offset = L * frame;
@@ -87,6 +98,23 @@ int main(void) {
     }
   }
 
+  for (int n = 0; n < N; n++) {
+    x2_real[n] = pcm0.s[n];
+    x2_imag[n] = 0.0;
+    y2_real[n] = pcm1.s[n];
+    y2_imag[n] = 0.0;
+  }
+
+  FFT(x2_real, x2_imag, N);
+  FFT(y2_real, y2_imag, N);
+
+  for (int i = 0; i < N; i++) {
+    fprintf(fp1, "%d %f\n", i * pcm0.fs / N,
+            sqrt(pow(x2_real[i], 2) + pow(x2_imag[i], 2)));
+    fprintf(fp2, "%d %f\n", i * pcm1.fs / N,
+            sqrt(pow(y2_real[i], 2) + pow(y2_imag[i], 2)));
+  }
+
   mono_wave_write(&pcm1,
                   "ex6_5.wav"); /* WAVEファイルにモノラルの音データを出力する */
 
@@ -100,6 +128,14 @@ int main(void) {
   free(x_imag); /* メモリの解放 */
   free(y_real); /* メモリの解放 */
   free(y_imag); /* メモリの解放 */
+
+  free(x2_real); /* メモリの解放 */
+  free(x2_imag); /* メモリの解放 */
+  free(y2_real); /* メモリの解放 */
+  free(y2_imag); /* メモリの解放 */
+
+  fclose(fp1);
+  fclose(fp2);
 
   return 0;
 }
