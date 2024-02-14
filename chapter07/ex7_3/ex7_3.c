@@ -10,26 +10,26 @@ int main(void)
   int n, m, d, I, J;
   double fc, Q, depth, rate, a[3], b[3];
   
-  mono_wave_read(&pcm0, "sample04.wav"); /* WAVEƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğ“ü—Í‚·‚é */
+  mono_wave_read(&pcm0, "sample04.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã™ã‚‹ */
   
-  pcm1.fs = pcm0.fs; /* •W–{‰»ü”g” */
-  pcm1.bits = pcm0.bits; /* —Êq‰»¸“x */
-  pcm1.length = pcm0.length; /* ‰¹ƒf[ƒ^‚Ì’·‚³ */
-  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  pcm1.fs = pcm0.fs; /* æ¨™æœ¬åŒ–å‘¨æ³¢æ•° */
+  pcm1.bits = pcm0.bits; /* é‡å­åŒ–ç²¾åº¦ */
+  pcm1.length = pcm0.length; /* éŸ³ãƒ‡ãƒ¼ã‚¿ã®é•·ã• */
+  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
-  I = 2; /* ’x‰„Ší‚Ì” */
-  J = 2; /* ’x‰„Ší‚Ì” */
+  I = 2; /* é…å»¶æœŸã®æ•° */
+  J = 2; /* é…å»¶æœŸã®æ•° */
   
   depth = 800.0; /* 800Hz */
   rate = 1.0; /* 1Hz */
   
-  /* ƒƒE */
+  /* ãƒ¯ã‚¦ */
   for (n = 0; n < pcm1.length; n++)
   {
-    fc = (1000.0 + depth * sin(2.0 * M_PI * rate * n / pcm1.fs)) / pcm1.fs; /* ’†Sü”g” */
-    Q = 2.0; /* ƒNƒIƒŠƒeƒBƒtƒ@ƒNƒ^ */
+    fc = (1000.0 + depth * sin(2.0 * M_PI * rate * n / pcm1.fs)) / pcm1.fs; /* ä¸­å¿ƒå‘¨æ³¢æ•° */
+    Q = 2.0; /* ã‚¯ã‚ªãƒªãƒ†ã‚£ãƒ•ã‚¡ã‚¯ã‚¿ */
     
-    IIR_resonator(fc, Q, a, b); /* IIRƒtƒBƒ‹ƒ^‚ÌİŒv */
+    IIR_resonator(fc, Q, a, b); /* IIRãƒ•ã‚£ãƒ«ã‚¿ã®è¨­è¨ˆ */
     
     for (m = 0; m <= J; m++)
     {
@@ -47,10 +47,10 @@ int main(void)
     }
   }
   
-  mono_wave_write(&pcm1, "ex7_3.wav"); /* WAVEƒtƒ@ƒCƒ‹‚Éƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ğo—Í‚·‚é */
+  mono_wave_write(&pcm1, "ex7_3.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã«ãƒ¢ãƒãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹ */
   
-  free(pcm0.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
-  free(pcm1.s); /* ƒƒ‚ƒŠ‚Ì‰ğ•ú */
+  free(pcm0.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(pcm1.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
   
   return 0;
 }

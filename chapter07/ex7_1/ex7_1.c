@@ -10,20 +10,20 @@ int main(void)
   long n, m, i, I, J;
   double fc, Q, g, a[3], b[3], A[3][3], B[3][3];
   
-  mono_wave_read(&pcm0, "sample04.wav"); /* WAVEƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ð“ü—Í‚·‚é */
+  mono_wave_read(&pcm0, "sample04.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ¢ãƒŽãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã™ã‚‹ */
   
-  pcm1.fs = pcm0.fs; /* •W–{‰»Žü”g” */
-  pcm1.bits = pcm0.bits; /* —ÊŽq‰»¸“x */
-  pcm1.length = pcm0.length; /* ‰¹ƒf[ƒ^‚Ì’·‚³ */
-  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ƒƒ‚ƒŠ‚ÌŠm•Û */
+  pcm1.fs = pcm0.fs; /* æ¨™æœ¬åŒ–å‘¨æ³¢æ•° */
+  pcm1.bits = pcm0.bits; /* é‡å­åŒ–ç²¾åº¦ */
+  pcm1.length = pcm0.length; /* éŸ³ãƒ‡ãƒ¼ã‚¿ã®é•·ã• */
+  pcm1.s = calloc(pcm1.length, sizeof(double)); /* ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
   
-  I = 2; /* ’x‰„Ší‚Ì” */
-  J = 2; /* ’x‰„Ší‚Ì” */
+  I = 2; /* é…å»¶æœŸã®æ•° */
+  J = 2; /* é…å»¶æœŸã®æ•° */
   
-  fc = 500.0 / pcm0.fs; /* ŽÕ’fŽü”g” */
-  Q = 1.0 / sqrt(2.0); /* ƒNƒIƒŠƒeƒBƒtƒ@ƒNƒ^ */
+  fc = 500.0 / pcm0.fs; /* é®æ–­å‘¨æ³¢æ•° */
+  Q = 1.0 / sqrt(2.0); /* ã‚¯ã‚ªãƒªãƒ†ã‚£ãƒ•ã‚¡ã‚¯ã‚¿ */
   g = -1.0;
-  IIR_low_shelving(fc, Q, g, a, b); /* IIRƒtƒBƒ‹ƒ^‚ÌÝŒv */
+  IIR_low_shelving(fc, Q, g, a, b); /* IIRãƒ•ã‚£ãƒ«ã‚¿ã®è¨­è¨ˆ */
   for (m = 0; m <= I; m++)
   {
     A[0][m] = a[m];
@@ -33,10 +33,10 @@ int main(void)
     B[0][m] = b[m];
   }
   
-  fc = 1000.0 / pcm0.fs; /* ’†SŽü”g” */
-  Q = 1.0 / sqrt(2.0); /* ƒNƒIƒŠƒeƒBƒtƒ@ƒNƒ^ */
+  fc = 1000.0 / pcm0.fs; /* ä¸­å¿ƒå‘¨æ³¢æ•° */
+  Q = 1.0 / sqrt(2.0); /* ã‚¯ã‚ªãƒªãƒ†ã‚£ãƒ•ã‚¡ã‚¯ã‚¿ */
   g = 1.0;
-  IIR_peaking(fc, Q, g, a, b); /* IIRƒtƒBƒ‹ƒ^‚ÌÝŒv */
+  IIR_peaking(fc, Q, g, a, b); /* IIRãƒ•ã‚£ãƒ«ã‚¿ã®è¨­è¨ˆ */
   for (m = 0; m <= I; m++)
   {
     A[1][m] = a[m];
@@ -46,10 +46,10 @@ int main(void)
     B[1][m] = b[m];
   }
   
-  fc = 2000.0 / pcm0.fs; /* ŽÕ’fŽü”g” */
-  Q = 1.0 / sqrt(2.0); /* ƒNƒIƒŠƒeƒBƒtƒ@ƒNƒ^ */
+  fc = 2000.0 / pcm0.fs; /* é®æ–­å‘¨æ³¢æ•° */
+  Q = 1.0 / sqrt(2.0); /* ã‚¯ã‚ªãƒªãƒ†ã‚£ãƒ•ã‚¡ã‚¯ã‚¿ */
   g = -1.0;
-  IIR_high_shelving(fc, Q, g, a, b); /* IIRƒtƒBƒ‹ƒ^‚ÌÝŒv */
+  IIR_high_shelving(fc, Q, g, a, b); /* IIRãƒ•ã‚£ãƒ«ã‚¿ã®è¨­è¨ˆ */
   for (m = 0; m <= I; m++)
   {
     A[2][m] = a[m];
@@ -59,7 +59,7 @@ int main(void)
     B[2][m] = b[m];
   }
   
-  /* ƒCƒRƒ‰ƒCƒUi3‘Ñˆæj */
+  /* ã‚¤ã‚³ãƒ©ã‚¤ã‚¶ï¼ˆ3å¸¯åŸŸï¼‰ */
   for (i = 0; i < 3; i++)
   {
     for (n = 0; n < pcm1.length; n++)
@@ -91,10 +91,10 @@ int main(void)
     }
   }
   
-  mono_wave_write(&pcm1, "ex7_1.wav"); /* WAVEƒtƒ@ƒCƒ‹‚Éƒ‚ƒmƒ‰ƒ‹‚Ì‰¹ƒf[ƒ^‚ðo—Í‚·‚é */
+  mono_wave_write(&pcm1, "ex7_1.wav"); /* WAVEãƒ•ã‚¡ã‚¤ãƒ«ã«ãƒ¢ãƒŽãƒ©ãƒ«ã®éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹ */
   
-  free(pcm0.s); /* ƒƒ‚ƒŠ‚Ì‰ð•ú */
-  free(pcm1.s); /* ƒƒ‚ƒŠ‚Ì‰ð•ú */
+  free(pcm0.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
+  free(pcm1.s); /* ãƒ¡ãƒ¢ãƒªã®è§£æ”¾ */
   
   return 0;
 }
